@@ -3,18 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Alphabet extends React.Component{
+  constructor(props) {
+  super(props);
+  this.state = {
+    value: 'X'
+  };
+}
   render() {
     return (
-      <button className="alphabet">
-      {this.props.value}
+      <button className="alphabet" onClick={() => this.setState({value: null})}>
+      {this.state.value}
       </button>
     );
   }
 }
 
 class Grid extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      alphabet: Array(26).fill(null),
+    };
+  }
   renderAlphabet(i) {
-    return <Alphabet value={i} />;
+    return <Alphabet value={this.state.alphabet[i]}
+            onClick={() => this.handleClick(i)}
+    />;
   }
     render () {
     return (
@@ -54,47 +68,6 @@ class Grid extends React.Component{
   }
 }
 
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square">
-        {this.props.value}
-      </button>
-    );
-  }
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-     return <Square value={i} />;
-  }
-
-  render() {
-    const status = 'Next player: X';
-
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare('a')}
-          {this.renderSquare('b')}
-          {this.renderSquare('c')}
-        </div>
-        <div className="board-row">
-          {this.renderSquare('d')}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-}
-
 class Game extends React.Component {
   render() {
     return (
@@ -103,7 +76,6 @@ class Game extends React.Component {
           <Grid />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
